@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, Upload, Download, X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import './ProductionScreen.css';
 
 const ProductionScreen = () => {
   const [viewMode, setViewMode] = useState('quantity');
@@ -25,55 +26,51 @@ const ProductionScreen = () => {
     { id: '25ZE123461', good: 98, bad: 42, total: 140, status: 'bad', birthdate: '2025-12-12' },
   ];
 
-  const maxQuantity = Math.max(...lots.map(l => l.total));
+  const maxQuantity = Math.max(...lots.map((l) => l.total));
 
-  const getStatusColor = (status) => {
-    const colors = {
-      good: 'bg-green-500',
-      suspend: 'bg-yellow-500',
-      bad: 'bg-red-500',
-      unknown: 'bg-black'
+ const getStatusClass = (status) => {
+    const classes = {
+      good: 'status-dot status-dot--good',
+      suspend: 'status-dot status-dot--suspend',
+      bad: 'status-dot status-dot--bad',
+      unknown: 'status-dot status-dot--unknown',
     };
-    return colors[status] || colors.unknown;
+    return classes[status] || classes.unknown;
   };
 
   return (
-    <div className="w-full h-screen bg-gray-50 flex flex-col">
+    <div className="production-screen">
       {/* Header Bar */}
-      <div className="bg-gradient-to-r from-teal-600 to-cyan-700 text-white px-4 py-2 shadow-md">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-4">
-            <div className="relative">
+      <div className="header">
+        <div className="header__top">
+          <div className="header__left">
+            <div className="menu">
               <button 
                 onClick={() => setShowMainMenu(!showMainMenu)}
-                className="hover:bg-teal-700 p-2 rounded flex items-center gap-2"
+                className="menu__trigger"
               >
                 <Menu size={24} />
-                <span className="text-sm">Menu</span>
+                 <span className="menu__label">Menu</span>
                 <ChevronDown size={16} />
               </button>
               
               {/* Main Menu Dropdown */}
               {showMainMenu && (
-                <div className="absolute top-full left-0 mt-1 bg-white text-gray-800 rounded shadow-lg w-64 z-50 border border-gray-200">
-                  <div className="py-1">
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50 flex items-center gap-2">
-                      <Upload size={16} className="text-teal-600" />
+                <div className="dropdown dropdown--main">
+                  <div className="dropdown__content">
+                    <button className="dropdown__item">
+                      <Upload size={16} className="dropdown__icon" />    
                       <span>Upload</span>
                     </button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50 flex items-center gap-2">
-                      <Download size={16} className="text-teal-600" />
+                    <button className="dropdown__item">
+                      <Download size={16} className="dropdown__icon" />
                       <span>Download</span>
                     </button>
-                    <div className="border-t border-gray-200 my-1"></div>
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50">
-                      Lot Management
-                    </button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50">
-                      Context
-                    </button>
-                    <div className="border-t border-gray-200 my-1"></div>
-                    <button className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
+                    <div className="dropdown__divider" />
+                    <button className="dropdown__item">Lot Management</button>
+                    <button className="dropdown__item">Context</button>
+                    <div className="dropdown__divider" />
+                    <button className="dropdown__item dropdown__item--danger">
                       <X size={16} />
                       <span>Exit</span>
                     </button>
@@ -82,30 +79,23 @@ const ProductionScreen = () => {
               )}
             </div>
             
-            <span className="font-bold text-lg">Nextcap 2.0</span>
+            <span className="brand">Nextcap 2.0</span>
           </div>
-          
-          <div className="flex gap-2">
+          <div className="header__actions">
             {/* External Menu Button */}
-            <button className="hover:bg-teal-700 px-3 py-1 rounded text-sm">
-              External Menu
-            </button>
+            <button className="ghost-button">External Menu</button>
             
             {/* Chart Menu Button */}
-            <button className="hover:bg-teal-700 px-3 py-1 rounded text-sm">
-              Chart Menu
-            </button>
+             <button className="ghost-button">Chart Menu</button>
             
             {/* Site Menu Button */}
-            <button className="hover:bg-teal-700 px-3 py-1 rounded text-sm">
-              Site: CJA2
-            </button>
+            <button className="ghost-button">Site: CJA2</button>
             
             {/* Admin Dropdown */}
-            <div className="relative">
-              <button 
+             <div className="menu">
+              <button
                 onClick={() => setShowAdminMenu(!showAdminMenu)}
-                className="bg-teal-700 hover:bg-teal-800 px-3 py-1 rounded flex items-center gap-2 text-sm"
+                 className="menu__trigger menu__trigger--primary"
               >
                 <span>Admin</span>
                 <ChevronDown size={16} />
@@ -113,21 +103,19 @@ const ProductionScreen = () => {
               
               {/* Admin Menu Dropdown */}
               {showAdminMenu && (
-                <div className="absolute top-full right-0 mt-1 bg-white text-gray-800 rounded shadow-lg w-56 z-50 border border-gray-200">
-                  <div className="py-1">
-                    <div className="px-4 py-2 bg-gray-100 border-b border-gray-200 font-semibold text-sm">
-                      Admin Actions
-                    </div>
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50 flex items-center gap-2">
-                      <Upload size={16} className="text-teal-600" />
+               <div className="dropdown dropdown--admin">
+                  <div className="dropdown__content">
+                    <div className="dropdown__header">Admin Actions</div>
+                    <button className="dropdown__item">
+                      <Upload size={16} className="dropdown__icon dropdown__icon--primary" />
                       <span>Upload Data (Lot & Pen)</span>
                     </button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-teal-50 flex items-center gap-2">
-                      <Download size={16} className="text-green-600" />
+                    <button className="dropdown__item">
+                      <Download size={16} className="dropdown__icon dropdown__icon--success" />
                       <span>Download Configuration</span>
                     </button>
-                    <div className="border-t border-gray-200 my-1"></div>
-                    <button className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
+                    <div className="dropdown__divider" />
+                    <button className="dropdown__item dropdown__item--danger">
                       <X size={16} />
                       <span>Exit Application</span>
                     </button>
@@ -139,7 +127,7 @@ const ProductionScreen = () => {
         </div>
         
         {/* Status Display */}
-        <div className="text-xs flex flex-wrap gap-x-4 gap-y-1 bg-teal-700 px-3 py-2 rounded">
+        <div className="status-bar">
           <span><strong>Machine:</strong> M3-Z3CPM-NXTCAP</span>
           <span><strong>Line Type:</strong> GEO</span>
           <span><strong>Line #:</strong> 1</span>
@@ -152,18 +140,17 @@ const ProductionScreen = () => {
       </div>
 
       {/* Chart Controls */}
-      <div className="bg-white border-b px-4 py-3 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <span className="font-semibold">View Mode:</span>
-            <label className="flex items-center gap-2 cursor-pointer">
+      <div className="controls">
+        <div className="controls__row">
+          <div className="controls__radio-group">
+            <span className="controls__label">View Mode:</span>
+            <label className="radio">
               <input
                 type="radio"
                 name="viewMode"
                 checked={viewMode === 'quantity'}
                 onChange={() => setViewMode('quantity')}
-                className="w-4 h-4"
-              />
+               />
               <span>Lot ID vs Part Quantity</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -172,73 +159,72 @@ const ProductionScreen = () => {
                 name="viewMode"
                 checked={viewMode === 'failures'}
                 onChange={() => setViewMode('failures')}
-                className="w-4 h-4"
-              />
+               />
               <span>Lot ID vs Failures</span>
             </label>
           </div>
           <button 
             onClick={() => setScrollPosition(100)}
-            className="bg-teal-600 text-white px-4 py-1 rounded hover:bg-teal-700 text-sm"
+            className="primary-button"
           >
             Show Latest
           </button>
         </div>
         
         {/* Scrollbar */}
-        <div className="mt-3 flex items-center gap-2">
-          <button className="p-1 hover:bg-gray-200 rounded">
+        <div className="scrollbar">
+          <button className="icon-button">
             <ChevronLeft size={20} />
           </button>
-          <div className="flex-1 bg-gray-200 h-2 rounded-full relative">
-            <div 
-              className="absolute h-full bg-teal-600 rounded-full"
+          <div className="scrollbar__track">
+            <div
+              className="scrollbar__thumb"
               style={{ width: '20%', left: `${scrollPosition - 20}%` }}
             />
           </div>
-          <button className="p-1 hover:bg-gray-200 rounded">
+
+           <button className="icon-button">
             <ChevronRight size={20} />
           </button>
         </div>
       </div>
 
       {/* Main Chart Area */}
-      <div className="flex-1 overflow-auto px-4 py-6">
-        <div className="relative bg-white rounded shadow p-6">
+      <div className="content">
+        <div className="chart-card">
           {/* Chart container with no Y-axis */}
-          <div className="flex items-end justify-start h-80 gap-4 pb-12">
+           <div className="bar-chart">
             {lots.slice(-12).map((lot, idx) => {
-              const totalHeight = 100;
               const goodPercentage = (lot.good / lot.total) * 100;
               const badPercentage = (lot.bad / lot.total) * 100;
               const barHeight = (lot.total / maxQuantity) * 100;
               
               return (
-                <div key={lot.id} className="flex flex-col items-center" style={{ width: '60px' }}>
+                  <div key={lot.id} className="bar-chart__item" style={{ width: '60px' }}>
                   {/* Total quantity above bar */}
-                  <div className="text-sm font-bold mb-1 text-gray-700">{lot.total}</div>
+                   <div className="bar-chart__total">{lot.total}</div>
                   
                   {/* Stacked Bar Chart */}
-                  <div 
-                    className="relative w-full cursor-pointer hover:opacity-90 transition flex flex-col-reverse"
+                   <div
+                    className="bar-chart__stack"
                     style={{ height: `${barHeight * 2.5}px` }}
                     onMouseEnter={() => setHoveredBar(idx)}
                     onMouseLeave={() => setHoveredBar(null)}
                   >
                     {/* Good parts (green) - bottom stack */}
-                    <div 
-                      className="bg-green-500 w-full"
+                     <div
+                      className="bar-chart__segment bar-chart__segment--good"
                       style={{ height: `${goodPercentage}%` }}
                     />
                     {/* Bad parts (red) - top stack */}
-                    <div 
-                      className="bg-red-500 w-full"
+                    <div
+                      className="bar-chart__segment bar-chart__segment--bad"
                       style={{ height: `${badPercentage}%` }}
                     />
                     
                     {/* Tooltip */}
                     {hoveredBar === idx && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white text-xs rounded px-3 py-2 whitespace-nowrap z-10 shadow-lg">
+                      <div className="tooltip">
                         <div><strong>Lot ID:</strong> {lot.id}</div>
                         <div><strong>Total Parts:</strong> {lot.total}</div>
                         <div><strong>Good:</strong> {lot.good} ({Math.round(goodPercentage)}%)</div>
@@ -249,10 +235,7 @@ const ProductionScreen = () => {
                   </div>
                   
                   {/* X-axis label - Lot ID */}
-                  <div 
-                    className="text-xs mt-3 transform -rotate-45 origin-top-left whitespace-nowrap font-medium text-gray-600"
-                    style={{ marginLeft: '8px' }}
-                  >
+                  <div className="bar-chart__label">  
                     {lot.id}
                   </div>
                 </div>
@@ -261,43 +244,43 @@ const ProductionScreen = () => {
           </div>
           
           {/* X-axis line */}
-          <div className="border-t-2 border-gray-300 mt-8"></div>
+          <div className="chart-card__axis" />
         </div>
 
         {/* Lot Icon Row */}
-        <div className="flex justify-around mt-16 px-4">
+        <div className="status-row">
           {lots.slice(-12).map((lot) => (
-            <div key={lot.id} className="flex flex-col items-center cursor-pointer hover:scale-110 transition">
+            <div key={lot.id} className="status-row__item">  
               <button 
-                className={`w-6 h-6 rounded-full ${getStatusColor(lot.status)} shadow-md`}
+                className={getStatusClass(lot.status)}
                 title={`Status: ${lot.status}`}
               />
-              <span className="text-xs mt-1 capitalize">{lot.status}</span>
+              <span className="status-row__label">{lot.status}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Control Panel */}
-      <div className="bg-white border-t px-6 py-4 shadow-lg">
-        <div className="max-w-2xl">
-          <h3 className="font-semibold mb-3">Add Part</h3>
-          <div className="flex gap-3">
+      <div className="control-panel">
+        <div className="control-panel__inner">
+          <h3 className="control-panel__title">Add Part</h3>
+          <div className="control-panel__inputs">
             <input
               type="text"
               value={partInput}
               onChange={(e) => setPartInput(e.target.value)}
               placeholder="Scan or enter Part ID"
-              className="flex-1 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="text-input"
             />
-            <button className="bg-green-600 text-white px-8 py-2 rounded hover:bg-green-700 font-semibold">
+            <button className="success-button">
               Good
             </button>
-            <button className="bg-red-600 text-white px-8 py-2 rounded hover:bg-red-700 font-semibold">
+            <button className="danger-button">
               Bad
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="control-panel__hint">
             Enter Part ID using scanner or keyboard, then click Good or Bad
           </p>
         </div>
