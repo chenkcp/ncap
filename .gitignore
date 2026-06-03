@@ -1,0 +1,46 @@
+*.log
+
+/new.json
+/update.json
+/delete.json
+
+/temp
+
+/frontend/node_modules
+/frontend/dist
+/frontend/dist-electron
+/frontend/release
+/frontend/*.local
+/frontend/.DS_Store
+
+# Dependencies
+/backend/node_modules/
+
+# Build
+/backend/dist/
+
+# Environment
+/backend/.env
+/backend/.env.local
+/backend/.env.*.local
+
+# Logs
+/backend/logs/
+/backend/*.log
+/backend/npm-debug.log*
+
+# IDE
+/backend/.idea/
+/backend/.vscode/
+/backend/*.swp
+/backend/*.swo
+
+# OS
+/backend/.DS_Store
+/backend/Thumbs.db
+
+# Test
+/backend/coverage/
+
+# AI_README
+/AI_README.txt

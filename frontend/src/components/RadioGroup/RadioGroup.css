@@ -1,0 +1,35 @@
+/* 单选按钮组样式 */
+.radio-group {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.radio-group.horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+.radio-group.vertical {
+  flex-direction: column;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.radio-item input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.radio-label {
+  user-select: none;
+}

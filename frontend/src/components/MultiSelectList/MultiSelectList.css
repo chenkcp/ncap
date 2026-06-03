@@ -1,0 +1,50 @@
+/* 多选列表组件样式 */
+.multi-select-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.multi-select-list-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.multi-select-list-container {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-content);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.multi-select-list-item {
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.multi-select-list-item:hover {
+  background-color: var(--bg-active);
+}
+
+.multi-select-list-item.selected {
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+}
+
+.multi-select-list-display {
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-content);
+  font-size: 11px;
+  color: var(--text-secondary);
+  overflow-y: auto;
+  word-wrap: break-word;
+}

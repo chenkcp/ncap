@@ -1,0 +1,208 @@
+/* DefectEditor 组件样式 */
+.defect-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: var(--bg-main);
+  min-width: 750px;
+}
+
+/* 顶部信息栏 */
+.defect-editor-header {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-end;
+}
+
+.header-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header-field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.header-field .input {
+  width: 180px;
+}
+
+.disposition-field {
+  margin-left: auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-content);
+}
+
+.disposition-field label {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* 复选框区域 */
+.defect-editor-checkbox {
+  padding: var(--spacing-xs) 0;
+}
+
+/* 三列选择区域 - Select 控件 */
+.defect-editor-selects {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.defect-select-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.select-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  padding: 8px 12px;
+  background: #e3f2fd;
+  border-radius: 4px;
+}
+
+.defect-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.defect-select:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.defect-select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* 操作按钮行 - removed, actions now inline in table */
+
+/* 行内操作按钮 */
+.defect-row-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.defect-row-actions .btn-xs {
+  padding: 2px 8px;
+  font-size: 11px;
+  min-width: unset;
+  line-height: 1.4;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.defect-row-actions .btn-xs:hover {
+  background: #f0f0f0;
+}
+
+.defect-row-actions .btn-primary {
+  background: #1976d2;
+  color: #fff;
+  border-color: #1565c0;
+}
+
+.defect-row-actions .btn-primary:hover {
+  background: #1565c0;
+}
+
+.defect-row-actions .btn-danger {
+  background: #d32f2f;
+  color: #fff;
+  border-color: #c62828;
+}
+
+.defect-row-actions .btn-danger:hover {
+  background: #c62828;
+}
+
+/* 数据表格区域 */
+.defect-editor-table {
+  margin-top: var(--spacing-sm);
+}
+
+/* 底部按钮 */
+.defect-editor-footer {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.defect-editor-footer .btn {
+  min-width: 100px;
+}
+
+.defect-editor-footer .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal 表单样式 */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.comment-textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.numeric-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.numeric-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal-buttons .btn {
+  min-width: 80px;
+}

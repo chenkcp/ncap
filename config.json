@@ -1,0 +1,177 @@
+{
+    "MACHINE": {
+        "LineNumber": "",
+        "LineType": "",
+        "Source": "",
+        "Hostname": "",
+        "LogEventsToFile": true,
+        "LogEventsPath": "C:/users/{username}/AppData/Roaming/nextcap/logs"
+    },
+    "LotId": {
+        "Format": "Option1",
+        "RunType": "",
+        "CountStartValue": 1,
+        "Option1": "YMDD[2chars product_code][2 digit running#][2 digit line_number][RunType]",
+        "Option2": "[2chars product_code]YYMMDD[2 digit running#][2 digit line_number][RunType]"
+    },
+    "PenId": {
+        "maxLen": 16,
+        "minLen": 16
+    },
+    "QualityMonitor": [
+        {
+            "source": "Z3B-LPQ", 
+            "initialSampleSize": 3, 
+            "immediateFail": true, 
+            "check": { 
+                "name": "Visual_QAC",
+                "repullEnabled": true, 
+                "repullQty": 24, 
+                "criteria": { 
+                    "initial": { 
+                        "Functional": 1, 
+                        "Risk": 2, 
+                        "Cosmetic": 3, 
+                        "functional_codepair": true, 
+                        "risk_codepair": true, 
+                        "cosmetic_codepair": true
+                    }, 
+                    "repull": { 
+                        "Functional": 2,
+                        "Risk": 7,
+                        "Cosmetic": 7,
+                        "functional_codepair": true,
+                        "risk_codepair": true,
+                        "cosmetic_codepair": true
+                    }
+                }
+            } 
+        },
+        {
+            "source": "Z1-CPM", 
+            "initialSampleSize": 6, 
+            "immediateFail": true, 
+            "check": { 
+                "name": "Visual_QAC",
+                "repullEnabled": false, 
+                "repullQty": 24, 
+                "criteria": { 
+                    "initial": { 
+                        "Functional": 1, 
+                        "Risk": 2, 
+                        "Cosmetic": 3, 
+                        "functional_codepair": true, 
+                        "risk_codepair": true, 
+                        "cosmetic_codepair": true
+                    }, 
+                    "repull": { 
+                        "Functional": 2,
+                        "Risk": 7,
+                        "Cosmetic": 7,
+                        "functional_codepair": true,
+                        "risk_codepair": true,
+                        "cosmetic_codepair": true
+                    }
+                }
+            } 
+        }
+    ],
+    "GENERAL": {
+        "RefreshInterval": 30,
+        "LogEventsToFile": true,
+        "NumDaysLogFile": 3,
+        "NumDaysDataToStore": 30,
+        "NumCapRetryAttempts": 10,
+        "GoodPenCode": "NTF",
+        "CapDefectLevel": 2,
+        "MfgDbType": "SQL-SERVER",
+        "DataSyncEnable": 0,
+        "DataSyncInterval": 60
+    },
+    "TestTypes": {
+        "CheckForInspectorResults": true,
+        "CheckForEtesterResults": false,
+        "CheckForEtesterRegionFails": false,
+        "CheckForKahunaRegionFails": false,
+        "RegionCheckEngineeringLots": false
+    },
+    "INSPECTOR": {
+        "FileStyle": "Inspector",
+        "ShareBanks": true,
+        "numOfColumns": 7,
+        "FileExtension": "txt",
+        "numOfBanks": 7,
+        "Bank1": "F:\\\\wh-ml-inspt1\\summarylog",
+        "Bank1Alias": "Panther1",
+        "Bank2": "\\\\wh-ml-inspt2\\summarylog",
+        "Bank2Alias": "Panther2",
+        "Bank3": "\\\\15.99.10.50\\summarylog",
+        "Bank3Alias": "Panther3",
+        "Bank4": "\\\\wh-lpq-inspt5\\summarylog",
+        "Bank4Alias": "Panther4",
+        "Bank5": "\\\\wh-lpq-inspt6\\summarylog",
+        "Bank5Alias": "Panther5",
+        "Bank6": "\\\\wh-lpq-inspt7\\summarylog",
+        "Bank6Alias": "Panther6",
+        "Bank7": "\\\\wh-lpq-inspt8\\summarylog",
+        "Bank7Alias": "Panther7"
+    },
+    "RULES": {
+        "numOfRules": 4,
+        "Rule1": "('FRG_PR' OR 'FRG_NA' OR 'FRG_RG' OR 'FRG') AND NOT ('NTF_K' OR 'NTF_E')",
+        "SetFailcode1": "FRG",
+        "Rule2": "'FET' AND NOT 'NTF_E'",
+        "SetFailcode2": "FET",
+        "Rule3": "'NTF' AND NOT 'NTFG' AND NOT 'FBDG' AND ('FNPG' OR 'FDRG' OR 'FMDG' OR 'FWNG')",
+        "SetFailcode3": "NTF",
+        "Rule4": "'NTFG' AND NOT 'NTF' AND NOT 'FBD' AND ('FNP' OR 'FDR' OR 'FMD' OR 'FWN' OR 'FSP' OR 'FER' OR 'FBL' OR 'FOD')",
+        "SetFailcode4": "NTF",
+        "numTestLevels": 4,
+        "TestLevel1": "ETESTER",
+        "TestLevel2": "KAHUNA",
+        "TestLevel3": "PLAIN",
+        "TestLevel4": "GLOSSY"
+    },
+    "SpecialFailcodes": {
+        "CodesToIgnore": "|BOG|"
+    },
+    "ETESTER": {
+        "CheckEtestGen1": false,
+        "CheckEtestGen2": true,
+        "SQL": "stamp like 'et5k%'",
+        "numOfPriorities": 2,
+        "Priority1": "'FET','NTF_E'",
+        "Priority2": "'FRG_NA','FRG_PR','FRG_RG','FRG'"
+    },
+    "PLAIN": {
+        "numOfPriorities": 5,
+        "Priority1": "'NTF'",
+        "Priority2": "'FNP','FDR','FMD','FWN','FSP','FER','FBL','FOD'",
+        "Priority3": "'FBD'",
+        "Priority4": "'RBD'",
+        "Priority5": "'FAE','FAP'"
+    },
+    "GLOSSY": {
+        "numOfPriorities": 5,
+        "Priority1": "'NTFG'",
+        "Priority2": "'FNPG','FDRG','FMDG','FWNG'",
+        "Priority3": "'FBDG'",
+        "Priority4": "'RBDG'",
+        "Priority5": "'FAEG','FAPG'"
+    },
+    "KAHUNA": {
+        "SQL": "",
+        "numOfPriorities": 2,
+        "Priority1": "'NTF_K'",
+        "Priority2": "'FRG_NA','FRG_PR','FRG_RG','FRG'"
+    },
+    "MatchList": {
+        "NTF_E": "NTF",
+        "NTF_K": "NTF",
+        "NTFG": "NTF",
+        "FRG_PR": "FRG",
+        "FRG_NA": "FRG",
+        "FRG_RG": "FRG"
+    }
+} 
+

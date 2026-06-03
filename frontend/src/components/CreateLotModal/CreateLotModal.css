@@ -1,0 +1,68 @@
+.create-lot-content {
+  padding: 20px;
+}
+
+.create-lot-content .form-description {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.create-lot-content .form-group {
+  margin-bottom: 20px;
+}
+
+.create-lot-content .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.create-lot-content .form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.create-lot-content .form-group input:focus {
+  border-color: #1890ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.create-lot-content .form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.create-lot-content .btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.create-lot-content .btn-primary {
+  background: #1890ff;
+  color: #fff;
+}
+
+.create-lot-content .btn-primary:hover {
+  background: #40a9ff;
+}
+
+.create-lot-content .btn-secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.create-lot-content .btn-secondary:hover {
+  background: #d9d9d9;
+}

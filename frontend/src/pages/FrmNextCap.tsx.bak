@@ -1,0 +1,234 @@
+import { useState } from 'react'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { Bar } from 'react-chartjs-2'
+import { Drawer, DefectEditor } from '../components'
+import './FrmNextCap.css'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  ChartDataLabels
+)
+
+function FrmNextCap() {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [selectedLot, setSelectedLot] = useState<string>('')
+
+  // 图表数据 - 堆叠柱状图，蓝色为正常数据，红色为异常数据
+  const chartData = {
+    labels: [
+      '25-09-10\n10 AM',
+      '25-09-16\n02 PM',
+      '25-09-24\n02 PM',
+      '25-09-24\n03 PM',
+      'S04XCD1S1',
+      'S04XCD2S1',
+      'S04XJD3\nS1',
+      'S04D4051\nS1',
+      '25-11-06\n11 AM',
+      '25-11-06\n02 PM',
+      'S07YC01S1',
+      'S07Y1',
+      'D22B1',
+      'S14XJ051\nS1',
+      '25-11-10\n03 PM',
+    ],
+    datasets: [
+      {
+        label: '正常',
+        data: [8, 1, 4, 3, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 1],
+        backgroundColor: '#4a90d9',
+        borderRadius: 2,
+      },
+      {
+        label: '异常',
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+        backgroundColor: '#e74c3c',
+        borderRadius: 2,
+      },
+    ],
+  }
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    onClick: (_event: unknown, elements: { index: number }[]) => {
+      if (elements.length > 0) {
+        const index = elements[0].index
+        const lotId = chartData.labels[index].replace('\n', ' ')
+        setSelectedLot(lotId)
+        setDrawerOpen(true)
+      }
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+      },
+      datalabels: {
+        color: '#fff',
+        anchor: 'center' as const,
+        align: 'center' as const,
+        font: {
+          size: 11,
+          weight: 'bold' as const,
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        display: function(context: any) {
+          return context.dataset.data[context.dataIndex] > 0
+        },
+      },
+    },
+    scales: {
+      x: {
+        stacked: true,
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: '#555',
+          font: {
+            size: 9,
+          },
+          maxRotation: 45,
+          minRotation: 45,
+        },
+      },
+      y: {
+        stacked: true,
+        display: true,
+        beginAtZero: true,
+        max: 20, // 固定Y轴最大值为10，可以根据需要修改
+        grid: {
+          color: '#eee',
+        },
+        ticks: {
+          color: '#555',
+          stepSize: 2, // 每隔2显示一个刻度
+        },
+      },
+    },
+  }
+
+  // 表情数据 - 与图表数据对应
+  const emojis = [
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'neutral', color: '#FFC107' },
+    { type: 'neutral', color: '#FFC107' },
+    { type: 'neutral', color: '#FFC107' },
+    { type: 'neutral', color: '#FFC107' },
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'neutral', color: '#FFC107' },
+    { type: 'sad', color: '#f44336' },
+    { type: 'sad', color: '#f44336' },
+    { type: 'happy', color: '#4CAF50' },
+    { type: 'sad', color: '#f44336' },
+    { type: 'neutral', color: '#FFC107' },
+  ]
+
+  const getEmojiIcon = (type: string, color: string) => {
+    if (type === 'happy') {
+      // 绿色美元符号 - 表示盈利
+      return (
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <circle cx="12" cy="12" r="10" fill={color} />
+          <text x="12" y="16" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">$</text>
+        </svg>
+      )
+    } else if (type === 'neutral') {
+      return (
+        <svg viewBox="0 0 24 24" fill={color} width="24" height="24">
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="8" cy="10" r="1.5" fill="#fff" />
+          <circle cx="16" cy="10" r="1.5" fill="#fff" />
+          <line x1="8" y1="15" x2="16" y2="15" stroke="#fff" strokeWidth="1.5" />
+        </svg>
+      )
+    } else {
+      return (
+        <svg viewBox="0 0 24 24" fill={color} width="24" height="24">
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="8" cy="10" r="1.5" fill="#fff" />
+          <circle cx="16" cy="10" r="1.5" fill="#fff" />
+          <path d="M8 16c1.5-2 6.5-2 8 0" stroke="#fff" strokeWidth="1.5" fill="none" />
+        </svg>
+      )
+    }
+  }
+
+  return (
+    <div className="nextcap-container">
+      {/* 顶部标签栏 */}
+      <div className="top-tabs">
+        <div className="tab">HESTIA(WET)</div>
+        <div className="tab">M1LPQ+HESTIA-NX</div>
+        <div className="tab">Z38-LPQ</div>
+        <div className="tab">operator1</div>
+        <div className="tab active">MAGMA1</div>
+        <div className="tab">Production</div>
+      </div>
+
+      {/* 图表区域 */}
+      <div className="chart-section">
+        <div className="chart-container">
+          <Bar data={chartData} options={chartOptions} />
+        </div>
+        
+        {/* 表情图标行 */}
+        <div className="emoji-row">
+          {emojis.map((emoji, index) => (
+            <div key={index} className="emoji-item">
+              {getEmojiIcon(emoji.type, emoji.color)}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 底部功能按钮 */}
+      <div className="bottom-buttons">
+        {/* <button className="func-btn" onClick={() => navigate('/')}>返回首页</button> */}
+        <button className="func-btn">Good Pen</button>
+        <button className="func-btn">Bad Pen</button>
+        <button className="func-btn">Edit Pen</button>
+        <button className="func-btn">Delete Pen</button>
+        <button className="func-btn">Context</button>
+        <button className="func-btn">Lat Mgt</button>
+      </div>
+
+      {/* DefectEditor 抽屉 */}
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title={`Defect Editor - ${selectedLot}`}
+        width={900}
+      >
+        <DefectEditor
+          lotId={selectedLot}
+          onOk={() => {
+            setDrawerOpen(false)
+            console.log('保存成功')
+          }}
+          onCancel={() => setDrawerOpen(false)}
+        />
+      </Drawer>
+    </div>
+  )
+}
+
+export default FrmNextCap
